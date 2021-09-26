@@ -8,18 +8,30 @@ namespace EvenLinq
     {
         static void Main(string[] args)
         {
-            List<int> numbers = CreateList();
-            List<int> even = SelectEven_V2(numbers);
+            List<int> initialNumbers = CreateList();
+            List<int> even = SelectEven_V2(initialNumbers);
+            List<int> sorted = Sort(even);
+
+            Console.WriteLine("Initial numbers are:");
+            DisplayListItems(initialNumbers);
+
+            Console.WriteLine("Even numbers are:");
             DisplayListItems(even);
+
+            Console.WriteLine("Sorted numbers are:);
+            DisplayListItems(sorted);
+
+            Console.ReadKey();
         }
 
         static List<int> CreateList()
         {
             List<int> newlyCreatedList = new List<int>();
 
-            for (int current = 0; current < 100; current++)
+            for (int current = 0; current < 20; current++)
             {
-                newlyCreatedList.Add(current);
+                Random randomizer = new Random();
+                newlyCreatedList.Add(randomizer.Next(0,100));
             }
             return newlyCreatedList;
         }
@@ -35,9 +47,16 @@ namespace EvenLinq
 
         static List<int> SelectEven_V2(List<int> numbersToSelectFrom) //object-like syntax
         {
-            var evenNumbers = numbersToSelectFrom.Where(number => number % 2 == 0);
+            List<int> evenNumbers = numbersToSelectFrom.Where(number => number % 2 == 0).ToList();
 
-            return evenNumbers.ToList();
+            return evenNumbers;
+        }
+
+        static List<int> Sort(List<int> numbersToBeSorted)
+        {
+            List<int> sortedNumbers = numbersToBeSorted.OrderByDescending(number => number).ToList();
+            
+            return sortedNumbers;
         }
 
         static void DisplayListItems(List<int> numbersToDisplay)
@@ -46,7 +65,7 @@ namespace EvenLinq
             {
                 Console.Write($"{item}, ");
             }
-            Console.ReadKey();
+            Console.WriteLine("\r\n");
         }
     }
 }
